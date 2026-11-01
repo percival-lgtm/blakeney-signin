@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src https://tiibetxsvwnwsfbcuhwi.supabase.co; form-action 'none'; base-uri 'none'">
+<meta name="robots" content="noindex">
+<meta name="blakeney-supabase-url" content="https://tiibetxsvwnwsfbcuhwi.supabase.co">
+<meta name="blakeney-publishable-key" content="sb_publishable_IiHrqTb-h9piSAVIc4bcag_XOtdBZ8J">
+<meta name="blakeney-label" content="blakeney-dev (test)">
+<meta name="blakeney-require-mfa" content="false">
+<title>Blakeney sign-in</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<main>
+  <h1>Blakeney sign-in</h1>
+  <p class="sub" id="label"></p>
+  <p class="msg" id="msg" role="status"></p>
+
+  <section id="login" hidden>
+    <form id="login-form">
+      <label for="email">Email</label>
+      <input id="email" type="email" autocomplete="username" required>
+      <label for="password">Password</label>
+      <input id="password" type="password" autocomplete="current-password" required>
+      <button class="primary" type="submit">Sign in</button>
+    </form>
+  </section>
+
+  <section id="mfa" hidden>
+    <form id="mfa-form">
+      <label for="mfa-code">6-digit code from your authenticator app</label>
+      <input id="mfa-code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" required>
+      <button class="primary" type="submit">Continue</button>
+    </form>
+    <button class="signout" type="button">Sign out</button>
+  </section>
+
+  <section id="consent" hidden>
+    <p class="big">An app wants to connect to Blakeney's tools as you</p>
+    <dl>
+      <dt>App name (chosen by the app itself)</dt><dd id="client-name"></dd>
+      <dt>It will send you back to</dt><dd class="big" id="redirect-host"></dd>
+      <dt>Full return address</dt><dd><code id="redirect-uri"></code></dd>
+      <dt>Permissions requested</dt><dd id="scopes"></dd>
+      <dt>App ID</dt><dd><code id="client-id"></code></dd>
+    </dl>
+    <p class="warn">Only approve if you just started this connection yourself and the return address belongs to the app you used (for Grok, an x.ai or grok.com address). If anything looks off, press Deny.</p>
+    <div class="row">
+      <button class="primary" id="approve" type="button">Approve</button>
+      <button id="deny" type="button">Deny</button>
+    </div>
+  </section>
+
+  <section id="home" hidden>
+    <p>Signed in as <strong id="who"></strong>.</p>
+    <p id="mfa-status"></p>
+    <button id="enroll-start" type="button">Set up authenticator app</button>
+    <button class="signout" type="button">Sign out</button>
+  </section>
+
+  <section id="enroll" hidden>
+    <p>Scan this with your authenticator app (Google Authenticator, 1Password, etc.), then type the 6-digit code it shows.</p>
+    <img id="qr" alt="Authenticator QR code">
+    <button id="show-secret" type="button">Can't scan? Show setup key</button>
+    <p><code id="totp-secret" hidden></code></p>
+    <form id="enroll-form">
+      <label for="enroll-code">6-digit code</label>
+      <input id="enroll-code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" required>
+      <button class="primary" type="submit">Turn on</button>
+    </form>
+  </section>
+</main>
+<script src="../../assets/supabase-2.117.3.js"></script>
+<script src="../../assets/consent.js"></script>
+</body>
+</html>
